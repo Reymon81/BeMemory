@@ -1,0 +1,55 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+<link rel="stylesheet" href="/css/bienvenida.css">
+<link rel="stylesheet" href="/css/card.css">
+
+<h1 style="text-align: center" class="animate__animated animate__flip fuente">Bienvenid@ {{nick}} !!</h1>
+
+
+<br/>
+<center><p><h2>Elige una de nuestras opciones</h2></p></center>
+<br/>
+
+<div class="containerCard">
+
+        <div class="card">
+        <img src="/img/conversaciones.jpg" class="card-img-top" alt="general" height="150">
+        <div class="card-body">
+            <h5 class="card-title">Conversaciones</h5>
+            <p class="card-text">Consulte o añada conversaciones mantenidas con los diferentes compañeros</p>
+            <a href="/home/conversaciones" class="btn btn-primary">Conversaciones</a>
+        </div>
+        </div>
+
+        <div class="card">
+        <img src="/img/reuniones.png" class="card-img-top" alt="doctor" height="150">
+        <div class="card-body">
+            <h5 class="card-title">Reuniones</h5>
+            <p class="card-text">Consulte o añada las reuniones programadas con los diferentes compañeros</p>
+            <a href="/home/reuniones" class="btn btn-primary">Reuniones</a>
+        </div>
+        </div>
+
+        <div class="card" >
+        <img src="/img/temas.webp" class="card-img-top" alt="kimetsu" height="150">
+        <div class="card-body">
+            <h5 class="card-title">Acciones</h5>
+            <p class="card-text">Consulte o añada las acciones que debe realizar para la gestion de diferentes compañeros</p>
+            <a href="/home/acciones" class="btn btn-primary">Acciones</a>
+        </div>
+        </div>
+        <div class="card" >
+        <img src="/img/contactos.png" class="card-img-top" alt="contactos" height="150">
+        <div class="card-body">
+            <h5 class="card-title">Contactos</h5>
+            <p class="card-text">Añada o elimine contactos de su agenda para poder gestionar las diferentes actividades</p>
+            <a href="/home/contactos" class="btn btn-primary">Contactos</a>
+        </div>
+        </div>
+</div>
+
+<!-- JQUERY -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+
+<script src="/socket.io/socket.io.js" charset="utf-8"></script>
+<script src="/js/main.js" charset="utf-8"></script>

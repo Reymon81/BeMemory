@@ -1,0 +1,46 @@
+<link rel="stylesheet" href="/css/size.css"> 
+
+<body class="temas">
+
+    <div class="row">
+    
+        <div class="col-md-6 mt-4 offset-1">
+            <div class="card">
+                <div class="card-header">
+                <center><h4>ACCIONES</h4></center> 
+                </div>
+                
+                <div id ="chat-kimetsu" class="card-body chat"></div>
+                <form id="message-form-kimetsu" class="card-footer">
+                    <div class="input-group">
+                        <input type="text" id="message-kimetsu" class="form-control">
+                        <div class="input-group-append">
+                            <input type="submit" class="btn btn-primary btn-block">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    
+        <div class="col-md-3  mt-4 offset-2">
+            <div class="card">
+                <div class="card-header">
+                    <center><h4>USERS</h4></center>
+                </div> 
+                <div class="card-body usuario">
+                    <div id="usuarios"></div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+</body>
+
+
+<!-- JQUERY -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+
+<script src="/socket.io/socket.io.js" charset="utf-8"></script>
+<script src="/js/main.js" charset="utf-8"></script>

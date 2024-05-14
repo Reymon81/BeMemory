@@ -1,0 +1,11 @@
+{{!-- se añade un atributo user que es la informacion del servidor en un json --}}
+<script id="sensibleData" data-sensible="{{user}}">
+  ;(()=>{
+    //funcion de flecha anonima de autollamada
+    const script = document.getElementById('sensibleData')
+    const __data = script?.dataset?.sensible
+    console.log(__data, typeof __data)
+    console.log(JSON.parse(__data))
+    window.___DATA___ = JSON.parse(__data || JSON.stringify({}))
+  })();
+</script>

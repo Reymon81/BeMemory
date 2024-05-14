@@ -1,0 +1,55 @@
+.chat{
+    height: 450px;
+    overflow-y: scroll;
+}
+
+.usuario{
+    height: 450px;
+    overflow-y: scroll;
+}
+
+.conversaciones{
+  background: url(/img/conversaciones.jpg)
+  no-repeat center center fixed;
+  background-size: cover;
+  -moz-background-size: cover;
+  -webkit-background-size: cover;
+  -o-background-size: cover;
+}
+
+.reuniones{
+  background: url(/img/reuniones.png)
+  no-repeat center center fixed;
+  background-size: cover;
+  -moz-background-size: cover;
+  -webkit-background-size: cover;
+  -o-background-size: cover;
+}
+
+.contactos{
+  background: url(/img/fondoContacto.jpg)
+  no-repeat center center fixed;
+  background-size: cover;
+  -moz-background-size: cover;
+  -webkit-background-size: cover;
+  -o-background-size: cover;
+}
+
+.temas{
+  background: url(/img/temas.webp)
+  no-repeat center center fixed;
+  background-size: cover;
+  -moz-background-size: cover;
+  -webkit-background-size: cover;
+  -o-background-size: cover;
+}
+
+.about{
+  background: url(/img/empresa.jpg)
+  no-repeat center center fixed;
+  background-size: cover;
+  -moz-background-size: cover;
+  -webkit-background-size: cover;
+  -o-background-size: cover;
+  color:blue;
+}

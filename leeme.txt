@@ -1,0 +1,31 @@
+Este proyecto utiliza mongodb, por lo tanto hay que instalar la base de datos mongodb
+y antes de ejecutar el servidor hay que escribir en una consola: mongod
+
+Para arrancar el servidor se utiliza en otra consola el comando: npm run dev
+
+Modulos necesarios para el funcionamiento del proyecto en nodejs:
+
+express --> para crear el servidor
+
+express-handlebars --> motor de plantillas para utilizar en express
+
+handlebars --> para acceder a los parametros de un objeto
+
+express-session --> crea sesiones dentro del servidor (se almacenan los datos en una sesion temporalmente
+                    para que no se puedan loguear otra vez)
+
+method-override --> extiende la funcionalidad de los formularios (put y delete) para enviarlos por ajax o javascript
+
+mongoose --> permite la conexion a la base de datos mongodb
+
+passport --> autenticacion
+
+passport-local --> autenticacion
+
+bcryptjs --> encripta las passwords y las convierte en un hash
+
+connect-flash --> envia mensajes entre multiples vistas
+
+socket.io --> comunicacion cliente-servidor a tiempo real
+
+nodemon --> reinicia el servidor automaticamente cuando hay algun cambio en el codigo

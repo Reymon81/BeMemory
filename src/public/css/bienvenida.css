@@ -1,0 +1,13 @@
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-gap: 15px;
+    -o-grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    -o-grid-gap: 15px;
+}
+
+.fuente{
+    font-family: Copperplate, Papyrus, fantasy;
+    font-weight: bold;
+    color: #0000ff;
+}
