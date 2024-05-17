@@ -1,30 +1,56 @@
-<div class="container mx-4">
-<div class="row">
-    <div class="col-md-4 ml-auto">
-        <div class="card">
-            <div class="card-header">
-               <center><h1>Acciones para realizar</h1></center> 
+<!--<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">-->
+<div class="container mt-4">
+    <div class="row">
+        <!-- Columna izquierda: Formulario -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <center><h1>Acciones para realizar</h1></center>
+                </div>
+                <div class="card-body">
+                    <!-- se mandan los datos del formulario mediante POST -->
+                    <form action="/home/acciones" method="POST">
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="contacto" placeholder="Nombre de persona" value="{{contacto}}" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="accion" placeholder="Acción para realizar" value="{{accion}}" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="fecha" placeholder="Fecha de la realización" value="{{fecha}}" required>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary btn-block">
+                                Guardar
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="card-body">
-                <!-- se mandan los datos del formulario mendiante post -->
-                <form action="/home/acciones" method="POST">
-                    <div class="form-group">
-                        <input type="text" class="form-control" name="contacto" placeholder="Nombre de persona" value="{{contacto}}">
+        </div>
+        <!-- Columna derecha: collectionData -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <center><h1>Acciones Guardadas</h1></center>
+                </div>
+                <div class="card-body">
+                    {{#each collectionData}}
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title"><b>{{this.fecha}}</b></h5>
+                            <p class="card-text">{{this.accion}} de {{this.contacto}}</p>
+                        </div>                            
                     </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" name="accion" placeholder="Accion para realizar" value="{{accion}}">
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" name="fecha" placeholder="Fecha de la realizacion" value="{{fecha}}">
-                    </div>
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-primary btn-block">
-                            Guardar
-                        </button>
-                    </div>
-                </form>
+                    {{/each}}
+                </div>
             </div>
         </div>
     </div>
 </div>
-</div>
+
+<!-- Scripts de Bootstrap 
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>-->
+

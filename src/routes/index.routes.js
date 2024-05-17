@@ -8,13 +8,13 @@ const Accion = require('../models/Acciones.js');
 const Reunion = require('../models/Reuniones.js');
 const Contacto = require('../models/Contactos.js');
 
-router.get("/", (req, res) => {
-  res.render("index");
-});
-
-router.get("/about", (req, res) => {
-  res.render("about");
-});
+// Definición de la lista de colecciones
+const collectionList = {
+  "conversaciones": Conversacion,
+  "reuniones": Reunion,
+  "acciones": Accion,
+  "contactos": Contacto
+};
 
 const roomList = [
   "conversaciones",
@@ -23,55 +23,106 @@ const roomList = [
   "contactos"
 ];
 
-router.get("/home/:roomId", isAuthenticated, (req, res) => {
+router.get("/", (req, res) => {
+  res.render("index");
+});
+
+router.get("/about", (req, res) => {
+  res.render("about");
+});
+
+
+
+router.get("/home/:roomId", isAuthenticated, async(req, res) => {
   
   const roomId = req.params.roomId;
-  const params = { user: JSON.stringify(req.user), nick: req.user?.nick };
-  
+
   if(!roomList.includes(roomId)){
     res.redirect("/");
   }
-  res.render("home/" + roomId, params);
+  try {
+    const collectionData = await collectionList[roomId].find().lean();
+    
+    console.log(collectionData);
+
+    const params = { 
+      user: JSON.stringify(req.user), 
+      nick: req.user?.nick, 
+      collectionData 
+    };
+  
+    res.render("home/" + roomId, params);
+  } catch(error) {
+    console.error("Error al consultar la colección:", error);
+    res.status(500).send("Error interno del servidor");
+  }
   
 });
 
-router.post('/home/conversaciones', async (req) => {
+router.post('/home/conversaciones', async (req, res) => {
 
   const {nombre, conversacion} = req.body;
+
+  // Obtener el nick del usuario autenticado
+  //const usuario = req.user.nick;
 
   const newConversacion = new Conversacion({nombre, conversacion});
 
   await newConversacion.save();
+
+  const collectionData = await Conversacion.find();
+
+  res.redirect('/home/conversaciones');
   
 });
 
-router.post('/home/acciones', async (req) => {
+router.post('/home/acciones', async (req, res) => {
 
   const {contacto, accion, fecha} = req.body;
+  // Obtener el nick del usuario autenticado
+  //const usuario = req.user.nick;
 
   const newAccion = new Accion({contacto, accion, fecha});
 
   await newAccion.save();
+
+  const collectionData = await Accion.find();
+
+  res.redirect('/home/acciones');
   
 });
 
-router.post('/home/reuniones', async (req) => {
+router.post('/home/reuniones', async (req, res) => {
 
   const {asunto, contactos, fecha, hora} = req.body;
+
+   // Obtener el nick del usuario autenticado
+  //const usuario = req.user.nick;
 
   const newReunion = new Reunion({asunto, contactos, fecha, hora});
 
   await newReunion.save();
+
+  const collectionData = await Reunion.find();
+
+  res.redirect('/home/reuniones');
   
 });
 
-router.post('/home/contactos', async (req) => {
+router.post('/home/contactos', async (req, res) => {
 
   const {nombre, apellidos, mail} = req.body;
+
+  // Obtener el nick del usuario autenticado
+  //const usuario = req.user.nick;
 
   const newContacto = new Contacto({nombre, apellidos, mail});
 
   await newContacto.save();
+
+  const collectionData = await Contacto.find();
+
+  res.redirect('/home/contactos');
   
 });
 
