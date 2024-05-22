@@ -41,11 +41,13 @@ router.get("/home/:roomId", isAuthenticated, async(req, res) => {
     res.redirect("/");
   }
   try {
-    const collectionData = await collectionList[roomId].find().lean();
-    
-    console.log(collectionData);
 
-    const params = { 
+    const usuario = req.user?.nick;
+
+    //consultamos todos los registros de la coleccion mongodb asociados al usuario en la seccion que nos encontramos 
+    const collectionData = await collectionList[roomId].find({ usuario }).lean();
+    
+      const params = { 
       user: JSON.stringify(req.user), 
       nick: req.user?.nick, 
       collectionData 
@@ -59,68 +61,62 @@ router.get("/home/:roomId", isAuthenticated, async(req, res) => {
   
 });
 
-router.post('/home/conversaciones', async (req, res) => {
+router.post('/home/conversaciones', isAuthenticated, async (req, res) => {
 
   const {nombre, conversacion} = req.body;
 
   // Obtener el nick del usuario autenticado
-  //const usuario = req.user.nick;
+  const usuario = req.user?.nick;
+  
+  // Se crea una nueva conversacion
+  const newConversacion = new Conversacion({usuario, nombre, conversacion});
 
-  const newConversacion = new Conversacion({nombre, conversacion});
-
+  // Se guarda la conversacion en mongo
   await newConversacion.save();
-
-  const collectionData = await Conversacion.find();
 
   res.redirect('/home/conversaciones');
   
 });
 
-router.post('/home/acciones', async (req, res) => {
+router.post('/home/acciones', isAuthenticated, async (req, res) => {
 
   const {contacto, accion, fecha} = req.body;
   // Obtener el nick del usuario autenticado
-  //const usuario = req.user.nick;
-
-  const newAccion = new Accion({contacto, accion, fecha});
+  const usuario = req.user?.nick;
+  
+  const newAccion = new Accion({usuario, contacto, accion, fecha});
 
   await newAccion.save();
-
-  const collectionData = await Accion.find();
 
   res.redirect('/home/acciones');
   
 });
 
-router.post('/home/reuniones', async (req, res) => {
+router.post('/home/reuniones', isAuthenticated, async (req, res) => {
 
   const {asunto, contactos, fecha, hora} = req.body;
 
    // Obtener el nick del usuario autenticado
-  //const usuario = req.user.nick;
-
-  const newReunion = new Reunion({asunto, contactos, fecha, hora});
+  const usuario = req.user?.nick;
+  
+  const newReunion = new Reunion({usuario, asunto, contactos, fecha, hora});
 
   await newReunion.save();
-
-  const collectionData = await Reunion.find();
 
   res.redirect('/home/reuniones');
   
 });
 
-router.post('/home/contactos', async (req, res) => {
+router.post('/home/contactos', isAuthenticated, async (req, res) => {
 
   const {nombre, apellidos, mail} = req.body;
 
   // Obtener el nick del usuario autenticado
-  //const usuario = req.user.nick;
-
-  const newContacto = new Contacto({nombre, apellidos, mail});
+  const usuario = req.user?.nick;
+  
+  const newContacto = new Contacto({usuario, nombre, apellidos, mail});
 
   await newContacto.save();
-
-  const collectionData = await Contacto.find();
 
   res.redirect('/home/contactos');
   
