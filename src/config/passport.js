@@ -21,7 +21,7 @@ passport.use(new localStrategy({
         const match = await user.matchPassword(password);
         if(match) {
             
-            if(user.connected === true){                
+            /*if(user.connected === true){                
                  return done(null, false, { message: "El usuario esta conectado" });
             }else{
                 
@@ -29,7 +29,10 @@ passport.use(new localStrategy({
                 // await user.save();
                 sessionHelper.activateSession(nick);
                 return done(null, user);
-            }
+            }*/
+
+            sessionHelper.activateSession(nick);
+            return done(null, user);
             
         }else{
             return done(null, false, {message: 'Password incorrecta'});
