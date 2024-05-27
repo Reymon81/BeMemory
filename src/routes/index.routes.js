@@ -61,6 +61,7 @@ router.get("/home/:roomId", isAuthenticated, async(req, res) => {
   
 });
 
+//se agrega una conversacion a la bd
 router.post('/home/conversaciones', isAuthenticated, async (req, res) => {
 
   const {nombre, conversacion} = req.body;
@@ -78,6 +79,19 @@ router.post('/home/conversaciones', isAuthenticated, async (req, res) => {
   
 });
 
+//se elimina una conversacion de la bd
+router.post('/eliminarConversacion', async (req, res) => {
+  try {
+      const conversacionId = req.body.conversacionId;
+      await Conversacion.findByIdAndRemove(conversacionId);
+      res.redirect('/home/conversaciones');
+  } catch (error) {
+      console.error("Error al eliminar la conversación:", error);
+      res.status(500).send("Error interno del servidor");
+  }
+});
+
+//se agrega una accion a la base de datos
 router.post('/home/acciones', isAuthenticated, async (req, res) => {
 
   const {contacto, accion, fecha} = req.body;
@@ -92,6 +106,19 @@ router.post('/home/acciones', isAuthenticated, async (req, res) => {
   
 });
 
+//se elimina una accion en la bd
+router.post('/eliminarAccion', isAuthenticated, async (req, res) => {
+  try {
+      const accionId = req.body.accionId;
+      await Accion.findByIdAndRemove(accionId);
+      res.redirect('/home/acciones');
+  } catch (error) {
+      console.error("Error al eliminar la acción:", error);
+      res.status(500).send("Error interno del servidor");
+  }
+});
+
+//se agrega una reunion a la bd
 router.post('/home/reuniones', isAuthenticated, async (req, res) => {
 
   const {asunto, contactos, fecha, hora} = req.body;
@@ -107,6 +134,19 @@ router.post('/home/reuniones', isAuthenticated, async (req, res) => {
   
 });
 
+//se elimina una reunion en la bd
+router.post('/eliminarReunion', isAuthenticated, async (req, res) => {
+  try {
+      const reunionId = req.body.reunionId;
+      await Reunion.findByIdAndRemove(reunionId);
+      res.redirect('/home/reuniones');
+  } catch (error) {
+      console.error("Error al eliminar una reunion:", error);
+      res.status(500).send("Error interno del servidor");
+  }
+});
+
+//se agrega un contacto a la bd
 router.post('/home/contactos', isAuthenticated, async (req, res) => {
 
   const {nombre, apellidos, mail} = req.body;
@@ -120,6 +160,18 @@ router.post('/home/contactos', isAuthenticated, async (req, res) => {
 
   res.redirect('/home/contactos');
   
+});
+
+//se elimina un contacto en la bd
+router.post('/eliminarContacto', isAuthenticated, async (req, res) => {
+  try {
+      const contactoId = req.body.contactoId;
+      await Contacto.findByIdAndRemove(contactoId);
+      res.redirect('/home/contactos');
+  } catch (error) {
+      console.error("Error al eliminar el contacto:", error);
+      res.status(500).send("Error interno del servidor");
+  }
 });
 
 module.exports = router;

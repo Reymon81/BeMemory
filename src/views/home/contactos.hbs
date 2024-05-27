@@ -40,6 +40,10 @@
                         <div class="card-body">
                             <h5 class="card-title"><b>{{this.nombre}} {{this.apellidos}}</b></h5>
                             <p class="card-text">{{this.mail}}</p>
+                            <form action="/eliminarContacto" method="POST">
+                                <input type="hidden" name="contactoId" value="{{this._id}}">
+                                <button type="submit" class="btn btn-sm btn-primary position-absolute" style="bottom: 10px; right: 10px;">Borrar</button>
+                            </form>
                         </div>
                     </div>
                     {{/each}}
