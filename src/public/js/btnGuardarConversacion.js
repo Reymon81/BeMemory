@@ -32,3 +32,17 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    const deleteForms = document.querySelectorAll('.delete-form');
+
+    deleteForms.forEach(form => {
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const confirmed = confirm('¿Está seguro de que desea eliminar esta conversación? Esta acción no se puede deshacer.');
+            if (confirmed) {
+                form.submit();
+            }
+        });
+    });
+});
