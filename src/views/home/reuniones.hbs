@@ -15,7 +15,12 @@
                             <input type="text" class="form-control" name="asunto" id="asunto" placeholder="Asunto de reunión" value="{{asunto}}" required>
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" name="contactos" id="contactos" placeholder="Miembros de la reunión" value="{{contactos}}" required>
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="contactos" id="contactos" placeholder="Miembros de la reunión" value="{{contactos}}" readonly required>
+                                <div class="input-group-append">
+                                    <button type="button" class="btn btn-secondary" id="btnAbrirPopup">Seleccionar</button>
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group">
                             <input type="date" class="form-control" id="fecha" name="fecha" value="{{fecha}}" min="{{today}}" required>
@@ -55,3 +60,33 @@
         </div>
     </div>
 </div>
+
+<!-- Modal de selección de contactos -->
+<div class="modal fade" id="modalContactos" tabindex="-1" role="dialog" aria-labelledby="modalContactosLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalContactosLabel">Seleccionar Contactos</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="formListaContactos">
+                    {{#each contactList}}
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="{{this}}">
+                            <label class="form-check-label">{{this}}</label>
+                        </div>
+                    {{/each}}
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="btnSeleccionar">Seleccionar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+

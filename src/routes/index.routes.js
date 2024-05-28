@@ -44,6 +44,17 @@ router.get("/home/:roomId", isAuthenticated, async(req, res) => {
 
     const usuario = req.user?.nick;
 
+    //obtenemos todos los contactos del usuario registrado
+    const collectionContact = await Contacto.find({usuario}).lean(); 
+
+    const contactList = collectionContact.map(contact => {
+      return contact.nombre + ' ' + contact.apellidos;
+  });
+
+    /*contactList.forEach(registro => {
+      console.log(registro);
+    });*/
+
     //consultamos todos los registros de la coleccion mongodb asociados al usuario en la seccion que nos encontramos 
     const collectionData = await collectionList[roomId].find({ usuario }).lean();
 
@@ -64,7 +75,8 @@ router.get("/home/:roomId", isAuthenticated, async(req, res) => {
       user: JSON.stringify(req.user), 
       nick: req.user?.nick, 
       collectionData,
-      today 
+      today,
+      contactList 
     };
   
     res.render("home/" + roomId, params);
