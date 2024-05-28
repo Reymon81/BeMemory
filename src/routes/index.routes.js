@@ -46,11 +46,25 @@ router.get("/home/:roomId", isAuthenticated, async(req, res) => {
 
     //consultamos todos los registros de la coleccion mongodb asociados al usuario en la seccion que nos encontramos 
     const collectionData = await collectionList[roomId].find({ usuario }).lean();
+
+    // Formatear la fecha antes de pasarla a la plantilla
+    collectionData.forEach(item => {
+      if (item.fecha instanceof Date) {
+        const day = item.fecha.getDate().toString().padStart(2, '0'); // Obtener el día y asegurarse de que tenga dos dígitos
+        const month = (item.fecha.getMonth() + 1).toString().padStart(2, '0'); // Obtener el mes y asegurarse de que tenga dos dígitos
+        const year = item.fecha.getFullYear(); // Obtener el año
+        item.fechaFormatted = `${day}/${month}/${year}`;
+      }
+    });
     
-      const params = { 
+    //obtenemos la fecha de hoy como minimo para crear cualquier evento y evitar poner fechas anteriores
+    const today = new Date().toISOString().split('T')[0];
+
+    const params = { 
       user: JSON.stringify(req.user), 
       nick: req.user?.nick, 
-      collectionData 
+      collectionData,
+      today 
     };
   
     res.render("home/" + roomId, params);
@@ -98,7 +112,10 @@ router.post('/home/acciones', isAuthenticated, async (req, res) => {
   // Obtener el nick del usuario autenticado
   const usuario = req.user?.nick;
   
-  const newAccion = new Accion({usuario, contacto, accion, fecha});
+  // Convertir la fecha a un objeto Date
+  const fechaObj = new Date(fecha);
+
+  const newAccion = new Accion({usuario, contacto, accion, fecha: fechaObj});
 
   await newAccion.save();
 

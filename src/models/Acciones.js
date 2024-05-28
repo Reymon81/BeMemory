@@ -6,7 +6,7 @@ const AccionesSchema = new Schema({
   usuario: { type: String, required: true },
   contacto: { type: String, required: true },
   accion: { type: String, required: true },
-  fecha: { type: String, required: true },
+  fecha: { type: Date, required: true },
 });
 
 module.exports = mongoose.model("acciones", AccionesSchema);

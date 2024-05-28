@@ -1,3 +1,4 @@
+<script src="/js/btnGuardarReunion.js"></script>
 <link rel="stylesheet" href="/css/card.css">
 <div class="container mt-4">
     <div class="row">
@@ -9,23 +10,21 @@
                 </div>
                 <div class="card-body">
                     <!-- se mandan los datos del formulario mediante POST -->
-                    <form action="/home/reuniones" method="POST">
+                    <form action="/home/reuniones" method="POST" id="formReuniones">
                         <div class="form-group">
-                            <input type="text" class="form-control" name="asunto" placeholder="Asunto de reunión" value="{{asunto}}" required>
+                            <input type="text" class="form-control" name="asunto" id="asunto" placeholder="Asunto de reunión" value="{{asunto}}" required>
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" name="contactos" placeholder="Miembros de la reunión" value="{{contactos}}" required>
+                            <input type="text" class="form-control" name="contactos" id="contactos" placeholder="Miembros de la reunión" value="{{contactos}}" required>
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" name="fecha" placeholder="Fecha de la reunión" value="{{fecha}}" required>
+                            <input type="date" class="form-control" id="fecha" name="fecha" value="{{fecha}}" min="{{today}}" required>
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" name="hora" placeholder="Hora de la reunión" value="{{hora}}" required>
+                            <input type="time" class="form-control" name="hora" id="hora" placeholder="Hora de la reunión" value="{{hora}}" required>
                         </div>
                         <div class="form-group">
-                            <button type="submit" class="btn btn-primary btn-block">
-                                Guardar
-                            </button>
+                            <button type="submit" class="btn btn-primary btn-block" id="btnGuardar" disabled>Guardar</button>
                         </div>
                     </form>
                 </div>
@@ -41,7 +40,7 @@
                     {{#each collectionData}}
                     <div class="card mb-3">
                         <div class="card-body">
-                            <h5 class="card-title"><b>{{this.fecha}} - {{this.hora}} h.</b></h5>
+                            <h5 class="card-title"><b>{{this.fechaFormatted}} - {{this.hora}} h.</b></h5>
                             <p class="card-text">{{this.asunto}}</p>
                             <p class="card-text">{{this.contactos}}</p>
                             <form action="/eliminarReunion" method="POST">

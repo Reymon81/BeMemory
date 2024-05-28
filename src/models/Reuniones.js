@@ -6,7 +6,7 @@ const ReunionesSchema = new Schema({
   usuario: { type: String, required: true },
   asunto: { type: String, required: true },
   contactos: { type: String, required: true },
-  fecha: { type: String, required: true },
+  fecha: { type: Date, required: true },
   hora: { type: String, required: true }
 });
 

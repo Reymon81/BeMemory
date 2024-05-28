@@ -1,4 +1,4 @@
-<!--<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">-->
+<script src="/js/btnGuardarAccion.js"></script>
 <link rel="stylesheet" href="/css/card.css">
 <div class="container mt-4">
     <div class="row">
@@ -10,20 +10,19 @@
                 </div>
                 <div class="card-body">
                     <!-- se mandan los datos del formulario mediante POST -->
-                    <form action="/home/acciones" method="POST">
+
+                    <form action="/home/acciones" method="POST" id="accionesForm">
                         <div class="form-group">
-                            <input type="text" class="form-control" name="contacto" placeholder="Nombre de persona" value="{{contacto}}" required>
+                            <input type="text" class="form-control" name="contacto" id="contacto" placeholder="Nombre de persona" value="{{contacto}}" required>
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" name="accion" placeholder="Acción para realizar" value="{{accion}}" required>
+                            <input type="text" class="form-control" name="accion" id="accion" placeholder="Acción para realizar" value="{{accion}}" required>
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" name="fecha" placeholder="Fecha de la realización" value="{{fecha}}" required>
+                            <input type="date" class="form-control" id="fecha" name="fecha" value="{{fecha}}" min="{{today}}" required>
                         </div>
                         <div class="form-group">
-                            <button type="submit" class="btn btn-primary btn-block">
-                                Guardar
-                            </button>
+                            <button type="submit" class="btn btn-primary btn-block" id="guardarBtn" disabled>Guardar</button>
                         </div>
                     </form>
                 </div>
@@ -39,7 +38,7 @@
                     {{#each collectionData}}
                     <div class="card mb-3">
                         <div class="card-body">
-                            <h5 class="card-title"><b>{{this.fecha}}</b></h5>
+                            <h5 class="card-title"><b>{{this.fechaFormatted}}</b></h5>
                             <p class="card-text">{{this.accion}} de {{this.contacto}}</p>
                             <form action="/eliminarAccion" method="POST">
                                 <input type="hidden" name="accionId" value="{{this._id}}">
