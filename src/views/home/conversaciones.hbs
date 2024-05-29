@@ -2,6 +2,7 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="/js/btnGuardarConversacion.js"></script>
 <link rel="stylesheet" href="/css/card.css">
+<link rel="stylesheet" href="/css/modificar.css">
 <div class="container mt-4">
     <div class="row">
         <!-- Columna izquierda: Formulario -->
@@ -44,15 +45,12 @@
                             <h5 class="card-title"><strong>{{this.nombre}}</strong></h5>
                             <p class="card-text">{{this.conversacion}}</p>
                             <div class="d-flex justify-content-between align-items-end">
-                        <form action="/modificarConversacion" method="POST" class="modify-form">
-                            <input type="hidden" name="conversacionId" value="{{this._id}}">
-                            <button type="submit" class="btn btn-sm btn-success" style="width: 100px">Modificar</button>
-                        </form>
-                        <form action="/eliminarConversacion" method="POST" class="delete-form">
-                            <input type="hidden" name="conversacionId" value="{{this._id}}">
-                            <button type="submit" class="btn btn-sm btn-danger" style="width: 100px">Borrar</button>  
-                        </form>
-                    </div>
+                                <button type="button" class="btn btn-sm btn-success modify-button" style="width: 80px" data-id="{{this._id}}" data-nombre="{{this.nombre}}" data-conversacion="{{this.conversacion}}">Modificar</button>
+                                <form action="/eliminarConversacion" method="POST" class="delete-form">
+                                    <input type="hidden" name="conversacionId" value="{{this._id}}">
+                                    <button type="submit" class="btn btn-sm btn-danger" style="width: 80px">Borrar</button>  
+                                </form>
+                            </div>
                         </div>
                     </div>
                     {{/each}}
@@ -72,4 +70,28 @@
     </div>
 </div>
 
-  
+<!-- modal para modificar conversación -->
+<div id="modify-modal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <div class="card-header">
+            <center><h1>Conversación a tratar</h1></center>
+        </div>
+        <div class="card-body">
+            <form action="/modificarConversacion" method="POST" id="formModificarConversacion">
+                <input type="hidden" name="conversacionId" id="modificarId">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="nombre" id="modificarNombre" placeholder="Contacto" list="contactos" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="conversacion" id="modificarConversacion" placeholder="Tema de conversación" required>
+                </div>
+                <div class="d-flex justify-content-between align-items-end">
+                    <button type="submit" class="btn btn-primary btn-block" style="width: 80px">Guardar</button>
+                    <button type="button" class="btn btn-secondary" id="cancelarModificar" style="width: 80px">Cancelar</button>
+                </div>
+            </form>
+            <!--<button type="button" class="btn btn-secondary" id="cancelarModificar">Cancelar</button>-->
+        </div>
+    </div>
+</div>

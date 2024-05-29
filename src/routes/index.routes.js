@@ -51,10 +51,6 @@ router.get("/home/:roomId", isAuthenticated, async(req, res) => {
       return contact.nombre + ' ' + contact.apellidos;
   });
 
-    /*contactList.forEach(registro => {
-      console.log(registro);
-    });*/
-
     //consultamos todos los registros de la coleccion mongodb asociados al usuario en la seccion que nos encontramos 
     const collectionData = await collectionList[roomId].find({ usuario }).lean();
 
@@ -116,6 +112,15 @@ router.post('/eliminarConversacion', async (req, res) => {
       res.status(500).send("Error interno del servidor");
   }
 });
+
+//se modifica una conversacion de la bd
+router.post('/modificarConversacion', async (req, res) => {
+
+  const {conversacionId, nombre, conversacion} = req.body;
+
+  await Conversacion.findByIdAndUpdate(conversacionId, { nombre: nombre, conversacion: conversacion });
+  res.redirect('/home/conversaciones');
+})
 
 //se agrega una accion a la base de datos
 router.post('/home/acciones', isAuthenticated, async (req, res) => {
