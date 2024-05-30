@@ -48,7 +48,7 @@
                             <h5 class="card-title"><b>{{this.fechaFormatted}}</b></h5>
                             <p class="card-text">{{this.accion}} de {{this.contacto}}</p>
                             <div class="d-flex justify-content-between align-items-end">
-                                <button type="submit" class="btn btn-sm btn-success modify-button" style="width: 80px">Modificar</button>
+                                <button type="submit" class="btn btn-sm btn-success modify-button" data-id="{{this._id}}" data-contacto="{{this.contacto}}" data-accion="{{this.accion}}" data-fecha="{{this.fechaFormatted}}" style="width: 80px">Modificar</button>
                                 <form action="/eliminarAccion" method="POST" class="delete-form">
                                     <input type="hidden" name="accionId" value="{{this._id}}">
                                     <button type="submit" class="btn btn-sm btn-danger" style="width: 80px">Borrar</button>
@@ -58,6 +58,43 @@
                     </div>
                     {{/each}}
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para Modificar Accion -->
+<div class="modal fade" id="modificarAccionModal" tabindex="-1" role="dialog" aria-labelledby="modificarAccionModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modificarAccionModalLabel">Modificar Acción</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="/modificarAccion" method="POST" id="modificarAccionForm">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="contacto" id="modificarContacto" placeholder="Contacto" list="contactos" required>
+                        <datalist id="contactos">
+                            {{#each contactList}}
+                                <option value="{{this}}">
+                            {{/each}}
+                        </datalist>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="accion" id="modificarAccion" placeholder="Acción para realizar" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="date" class="form-control" id="modificarFecha" name="fecha" min="{{today}}" required>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-end">
+                        <button type="submit" class="btn btn-primary btn-block" style="width: 80px">Guardar</button>
+                        <button type="button" class="btn btn-secondary" id="cancelarModificar" style="width: 80px">Cancelar</button>
+                    </div>
+                    <input type="hidden" id="accionId" name="accionId">
+                </form>
             </div>
         </div>
     </div>

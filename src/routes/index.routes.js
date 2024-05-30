@@ -152,6 +152,16 @@ router.post('/eliminarAccion', isAuthenticated, async (req, res) => {
   }
 });
 
+//se modifica una accion en la bd
+router.post('/modificarAccion', async (req, res) => {
+
+  const {accionId, contacto, accion, fecha} = req.body;
+
+  await Accion.findByIdAndUpdate(accionId, { contacto: contacto, accion: accion, fecha: fecha });
+  res.redirect('/home/acciones');
+})
+
+
 //se agrega una reunion a la bd
 router.post('/home/reuniones', isAuthenticated, async (req, res) => {
 
