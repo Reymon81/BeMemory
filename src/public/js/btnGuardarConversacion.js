@@ -90,36 +90,36 @@ $(document).ready(function() {
         }
     });
 
-    // Modal de modificar conversación
-    var modifyModal = $('#modify-modal');
-    var modifySpan = modifyModal.find('.close');
+});
 
-    $('.modify-button').on('click', function() {
-        var id = $(this).data('id');
-        var nombre = $(this).data('nombre');
-        var conversacion = $(this).data('conversacion');
-        
+$(document).ready(function() {
+    // Función para abrir el modal y llenar los campos con los datos de la conversación seleccionada
+    function abrirModalModificar(id, nombre, conversacion) {
+        // Llenar los campos del formulario con los datos de la conversación
         $('#modificarId').val(id);
         $('#modificarNombre').val(nombre);
         $('#modificarConversacion').val(conversacion);
         
-        modifyModal.show();
-    });
+        // Mostrar el modal
+        $('#modificarConversacionModal').modal('show');
+    }
 
-    modifySpan.on('click', function() {
-        modifyModal.hide();
-    });
-
-    $(window).on('click', function(event) {
-        if (event.target == modifyModal[0]) {
-            modifyModal.hide();
-        }
+    // Evento click en los botones de modificar
+    $('.modify-button').on('click', function() {
+        // Obtener los datos de la conversación desde los atributos data del botón
+        var id = $(this).data('id');
+        var nombre = $(this).data('nombre');
+        var conversacion = $(this).data('conversacion');
+        
+        // Llamar a la función para abrir el modal y llenar los campos
+        abrirModalModificar(id, nombre, conversacion);
     });
 });
 
 $(document).ready(function() {
-    // Captura el clic en el botón "Cancelar" y cierra el modal
-    $("#cancelarModificar").click(function() {
-        $("#modify-modal").hide();
+    // Agrega un controlador de eventos de clic al botón de cancelar
+    // Manejar el cierre del modal sin realizar cambios
+    $('#cancelarModificar').on('click', function() {
+        $('#modificarConversacionModal').modal('hide');
     });
 });
