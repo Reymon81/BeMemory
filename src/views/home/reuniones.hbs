@@ -48,10 +48,13 @@
                             <h5 class="card-title"><b>{{this.fechaFormatted}} - {{this.hora}} h.</b></h5>
                             <p class="card-text">{{this.asunto}}</p>
                             <p class="card-text">{{this.contactos}}</p>
-                            <form action="/eliminarReunion" method="POST">
-                                <input type="hidden" name="reunionId" value="{{this._id}}">
-                                <button type="submit" class="btn btn-sm btn-primary position-absolute" style="bottom: 10px; right: 10px;">Borrar</button>
-                            </form>
+                            <div class="d-flex justify-content-between align-items-end">
+                                <button type="button" class="btn btn-sm btn-success modify-button" style="width: 80px" data-id="{{this._id}}" data-asunto="{{this.asunto}}" data-contactos="{{this.contactos}}" data-fecha="{{this.fechaFormatted}}" data-hora="{{this.hora}}">Modificar</button>
+                                <form action="/eliminarReunion" method="POST">
+                                    <input type="hidden" name="reunionId" value="{{this._id}}">
+                                    <button type="submit" class="btn btn-sm btn-danger" style="width: 80px">Borrar</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                     {{/each}}
@@ -84,6 +87,78 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                 <button type="button" class="btn btn-primary" id="btnSeleccionar">Seleccionar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de selección de contactos de modificacion-->
+<div class="modal fade" id="modalContactosModificacion" tabindex="-1" role="dialog" aria-labelledby="modalContactosModificacionLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalContactosModificacionLabel">Seleccionar Contactos Modificados</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="formListaContactos">
+                    {{#each contactList}}
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="{{this}}">
+                            <label class="form-check-label">{{this}}</label>
+                        </div>
+                    {{/each}}
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="btnSeleccionar">Seleccionar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para Modificar Reunion -->
+<div class="modal fade" id="modificarReunionModal" tabindex="-1" role="dialog" aria-labelledby="modificarReunionLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modificarReunionModalLabel">Modificar Reunión</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="/modificarReunion" method="POST" id="modificarReunionForm">
+                    <div class="form-group">
+                        <label for="modificarAsunto">Asunto de reunión</label>
+                        <input type="text" class="form-control" name="asunto" id="modificarAsunto" placeholder="Asunto de reunión" required>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="contactos" id="modificarContactos" placeholder="Miembros de la reunión" list="contactos" required>
+                            <div class="input-group-append">
+                                <button type="button" class="btn btn-secondary" id="btnAbrirPopupModificar">Seleccionar</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="modificarFecha">Fecha</label>
+                        <input type="date" class="form-control" id="modificarFecha" name="fecha" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="modificarHora">Hora</label>
+                        <input type="time" class="form-control" name="hora" id="modificarHora" required>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-end">
+                        <button type="submit" class="btn btn-primary btn-block" style="width: 80px">Guardar</button>
+                        <button type="button" class="btn btn-secondary" id="cancelarModificar" style="width: 80px">Cancelar</button>
+                    </div>
+                    <input type="hidden" id="accionId" name="accionId">
+                </form>
+
             </div>
         </div>
     </div>

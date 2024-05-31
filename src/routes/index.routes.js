@@ -190,6 +190,15 @@ router.post('/eliminarReunion', isAuthenticated, async (req, res) => {
   }
 });
 
+//se modifica una reunion de la bd
+router.post('/modificarReunion', async (req, res) => {
+  const {accionId, asunto, contactos, fecha, hora} = req.body;
+
+  await Reunion.findByIdAndUpdate(accionId, {asunto: asunto, contactos: contactos, fecha: fecha, hora: hora});
+  res.redirect('/home/reuniones');
+});
+
+
 //se agrega un contacto a la bd
 router.post('/home/contactos', isAuthenticated, async (req, res) => {
 

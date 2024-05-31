@@ -1,37 +1,93 @@
 document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("formReuniones");
     const submitButton = document.getElementById("btnGuardar");
+    const deleteButtons = document.querySelectorAll('.btn-danger');
+    const modifyButtons = document.querySelectorAll('.modify-button');
+    const btnAbrirPopup = document.getElementById("btnAbrirPopup");
+    const btnSeleccionarContactos = document.getElementById("btnSeleccionar");
+    const cancelarModificar = document.getElementById('cancelarModificar');
+    const btnAbrirPopupModificar = document.getElementById("btnAbrirPopupModificar");
 
     const checkFormValidity = () => {
-        const isFormValid = form.checkValidity();
-        submitButton.disabled = !isFormValid;
+        submitButton.disabled = !form.checkValidity();
     };
 
-    const fields = form.querySelectorAll("input, select, textarea");
-    fields.forEach(field => {
-        field.addEventListener("input", checkFormValidity);
-        field.addEventListener("change", checkFormValidity);
-    });
+    const addEventListenersToFields = () => {
+        const fields = form.querySelectorAll("input, select, textarea");
+        fields.forEach(field => {
+            field.addEventListener("input", checkFormValidity);
+            field.addEventListener("change", checkFormValidity);
+        });
+    };
 
-    // Llama a checkFormValidity al cargar la página para asegurar que el botón está correctamente deshabilitado si los campos no están completos
-    checkFormValidity();
+    const openModal = (modalId) => {
+        $(`#${modalId}`).modal('show');
+    };
 
-    // Maneja el botón "Seleccionar" del modal
-    const btnSeleccionar = document.getElementById("btnAbrirPopup");
+    const closeModal = (modalId) => {
+        $(`#${modalId}`).modal('hide');
+    };
 
-    btnSeleccionar.addEventListener("click", () => {
-        $('#modalContactos').modal('show'); // Abre el modal al hacer clic en "Seleccionar"
-    });
-
-    // Maneja el botón "Seleccionar" del modal de contactos
-    const btnSeleccionarContactos = document.getElementById("btnSeleccionar");
-
-    btnSeleccionarContactos.addEventListener("click", () => {
+    const handleSeleccionarContactos = () => {
         const contactosCheckboxes = document.querySelectorAll("#formListaContactos input[type='checkbox']:checked");
         const contactosInput = document.getElementById("contactos");
         const contactosSeleccionados = Array.from(contactosCheckboxes).map(checkbox => checkbox.value);
         contactosInput.value = contactosSeleccionados.join(", ");
-        $('#modalContactos').modal('hide'); // Cierra el modal después de seleccionar los contactos
-    });
-});
+        closeModal('modalContactos');
+    };
 
+    const handleDeleteButtonClick = (deleteButton) => {
+        deleteButton.addEventListener("click", (event) => {
+            event.preventDefault();
+            if (confirm('¿Está seguro de que desea eliminar esta reunión? Esta acción no se puede deshacer.')) {
+                deleteButton.closest('form').submit();
+            }
+        });
+    };
+
+    const handleModifyButtonClick = (modifyButton) => {
+        modifyButton.addEventListener("click", () => {
+            const id = modifyButton.getAttribute('data-id');
+            const asunto = modifyButton.getAttribute('data-asunto');
+            const contactos = modifyButton.getAttribute('data-contactos');
+            const fecha = modifyButton.getAttribute('data-fecha');
+            const hora = modifyButton.getAttribute('data-hora');
+
+            const fechaParts = fecha.split('/');
+            const formattedFecha = `${fechaParts[2]}-${fechaParts[1]}-${fechaParts[0]}`;
+
+            const modificarAsunto = document.getElementById('modificarAsunto');
+            const modificarContactos = document.getElementById('modificarContactos');
+            const modificarFecha = document.getElementById('modificarFecha');
+            const modificarHora = document.getElementById('modificarHora');
+            const accionId = document.getElementById('accionId');
+
+            if (modificarAsunto && modificarContactos && modificarFecha && modificarHora && accionId) {
+                modificarAsunto.value = asunto;
+                modificarContactos.value = contactos;
+                modificarFecha.value = formattedFecha;
+                modificarHora.value = hora;
+                accionId.value = id;
+
+                openModal('modificarReunionModal');
+            } else {
+                console.error("Uno o más elementos del formulario de modificación no se encontraron.");
+            }
+        });
+    };
+
+    checkFormValidity();
+    addEventListenersToFields();
+
+    btnAbrirPopup.addEventListener("click", () => openModal('modalContactos'));
+    btnSeleccionarContactos.addEventListener("click", handleSeleccionarContactos);
+
+    deleteButtons.forEach(handleDeleteButtonClick);
+    modifyButtons.forEach(handleModifyButtonClick);
+
+    cancelarModificar.addEventListener("click", () => closeModal('modificarReunionModal'));
+
+    if (btnAbrirPopupModificar) {
+        btnAbrirPopupModificar.addEventListener("click", () => openModal('modalContactos'));
+    }
+});
