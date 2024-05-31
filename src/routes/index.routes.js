@@ -218,4 +218,13 @@ router.post('/eliminarContacto', isAuthenticated, async (req, res) => {
   }
 });
 
+//se modifica un contacto de la bd
+router.post('/modificarContacto', async (req, res) => {
+
+  const {contactoId, nombre, apellidos, mail} = req.body;
+
+  await Contacto.findByIdAndUpdate(contactoId, { nombre: nombre, apellidos: apellidos, mail:  mail});
+  res.redirect('/home/contactos');
+})
+
 module.exports = router;
